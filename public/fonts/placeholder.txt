@@ -1,0 +1,9 @@
+// This is a placeholder file. In a real project, you would need to include the actual font files:
+// - Obviously-Light.woff2
+// - Obviously-Regular.woff2
+// - Obviously-Medium.woff2
+// - Obviously-Bold.woff2
+// - CabinetGrotesk-Thin.woff2
+// - CabinetGrotesk-Regular.woff2
+// - CabinetGrotesk-Medium.woff2
+// - CabinetGrotesk-Bold.woff2
