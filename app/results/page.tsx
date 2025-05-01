@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card } from "@/components/ui/card"
-import { Search, Share, MoreHorizontal, X, ArrowUp } from "lucide-react"
-import { Logo } from "@/components/logo"
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Search, Share, MoreHorizontal, X, ArrowUp } from "lucide-react";
+import { Logo } from "@/components/logo";
 
 // Mock data for search results
 const mockResponse = {
@@ -18,35 +18,41 @@ const mockResponse = {
       content:
         "President Donald Trump has made good on his campaign promise to impose tariffs on imports from the United States' three largest supplier countries—Canada, China, and Mexico. Trump signed orders on Saturday evening, imposing 25% tariffs on imports from Mexico and Canada (though Canadian energy faces a lower tariff of 10%) and 10% tariffs on goods from China.",
       score: 0.8033131,
-      source: "https://time.com/7212166/what-are-tariffs-trump-imposing-import-taxes/",
-      title: "China to now pay up to 245% tariffs on imports to US: Trump administration announces",
+      source:
+        "https://time.com/7212166/what-are-tariffs-trump-imposing-import-taxes/",
+      title:
+        "China to now pay up to 245% tariffs on imports to US: Trump administration announces",
       publication: "hindustantimes",
     },
     {
       content:
         "The Trump administration imposed several rounds of tariffs on steel, aluminum, washing machines, solar panels, and goods from China, affecting more than $380 billion worth of trade at the time of implementation and amounting to a tax increase of nearly $80 billion.",
       score: 0.78788257,
-      source: "https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/",
-      title: "China now faces 245% tariffs on US imports after retaliation amid trade war",
+      source:
+        "https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/",
+      title:
+        "China now faces 245% tariffs on US imports after retaliation amid trade war",
       publication: "indianexpress",
     },
     {
       content:
         "Tariffs What to Know About Trump's New Tariffs The president announced sweeping tariffs on Wednesday in an effort to reset global trading relationships. The tariffs announced by President Trump on Wednesday apply to most of the world.",
       score: 0.77650476,
-      source: "https://www.nytimes.com/2025/04/03/business/economy/trump-tariffs-trade.html",
-      title: "Ask US for the specific tax rate figures: China responds to Trump's tariffs",
+      source:
+        "https://www.nytimes.com/2025/04/03/business/economy/trump-tariffs-trade.html",
+      title:
+        "Ask US for the specific tax rate figures: China responds to Trump's tariffs",
       publication: "economictimes",
     },
   ],
-}
+};
 
 // Type definition for search results
 interface SearchResult {
-  id: string
-  query: string
-  timestamp: Date
-  response: typeof mockResponse
+  id: string;
+  query: string;
+  timestamp: Date;
+  response: typeof mockResponse;
 }
 
 export default function ResultsPage() {
@@ -58,41 +64,48 @@ export default function ResultsPage() {
       timestamp: new Date(),
       response: mockResponse,
     },
-  ])
+  ]);
 
-  const [newMessage, setNewMessage] = useState("")
-  const [isInputExpanded, setIsInputExpanded] = useState(false)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-  const floatingInputRef = useRef<HTMLDivElement>(null)
+  const [newMessage, setNewMessage] = useState("");
+  const [isInputExpanded, setIsInputExpanded] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const floatingInputRef = useRef<HTMLDivElement>(null);
 
   // Refs for scrolling to new results
-  const resultRefs = useRef<{ [key: string]: HTMLDivElement | null }>({})
+  const resultRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
   // Auto-resize textarea based on content
   useEffect(() => {
     if (textareaRef.current && isInputExpanded) {
-      textareaRef.current.style.height = "60px"
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`
+      textareaRef.current.style.height = "60px";
+      textareaRef.current.style.height = `${Math.min(
+        textareaRef.current.scrollHeight,
+        120
+      )}px`;
     }
-  }, [newMessage, isInputExpanded])
+  }, [newMessage, isInputExpanded]);
 
   // Handle click outside to collapse input when expanded
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (floatingInputRef.current && !floatingInputRef.current.contains(event.target as Node) && isInputExpanded) {
-        setIsInputExpanded(false)
+      if (
+        floatingInputRef.current &&
+        !floatingInputRef.current.contains(event.target as Node) &&
+        isInputExpanded
+      ) {
+        setIsInputExpanded(false);
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [isInputExpanded])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isInputExpanded]);
 
   // Format the response into a more structured document
   const formatResponse = () => {
-    const introduction = `The recent developments in tariffs imposed by the Trump administration on China have significantly escalated tensions in the ongoing trade war between the two nations. Here's a summary of the key points:`
+    const introduction = `The recent developments in tariffs imposed by the Trump administration on China have significantly escalated tensions in the ongoing trade war between the two nations. Here's a summary of the key points:`;
 
     return (
       <div className="space-y-8">
@@ -106,111 +119,157 @@ export default function ResultsPage() {
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">Tariff Rates:</span>
+                <span className="text-deep-graphite font-bold">
+                  Tariff Rates:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  The Trump administration has announced that China now faces tariffs of up to 245% on certain imports
-                  to the United States. However, this figure represents the cumulative effect of multiple tariffs rather
-                  than a new blanket tariff rate{" "}
+                  The Trump administration has announced that China now faces
+                  tariffs of up to 245% on certain imports to the United States.
+                  However, this figure represents the cumulative effect of
+                  multiple tariffs rather than a new blanket tariff rate{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">1</span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">6</span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">8</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  1
+                </span>
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  6
+                </span>
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  8
+                </span>
+                .
               </div>
             </li>
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">Reasons for Tariffs:</span>
+                <span className="text-deep-graphite font-bold">
+                  Reasons for Tariffs:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  The tariffs are part of Trump's "America First" trade policy, aimed at countering China's export
-                  restrictions and retaliatory measures. China had banned exports of key high-tech materials and rare
-                  earth metals, which are crucial for various industries{" "}
+                  The tariffs are part of Trump's "America First" trade policy,
+                  aimed at countering China's export restrictions and
+                  retaliatory measures. China had banned exports of key
+                  high-tech materials and rare earth metals, which are crucial
+                  for various industries{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">1</span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">2</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  1
+                </span>
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  2
+                </span>
+                .
               </div>
             </li>
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">Escalation of Trade War:</span>
+                <span className="text-deep-graphite font-bold">
+                  Escalation of Trade War:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  The move follows a series of retaliations, including China raising tariffs on U.S. goods to 125% after
-                  the U.S. increased tariffs on Chinese imports to 145%{" "}
+                  The move follows a series of retaliations, including China
+                  raising tariffs on U.S. goods to 125% after the U.S. increased
+                  tariffs on Chinese imports to 145%{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">2</span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">8</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  2
+                </span>
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  8
+                </span>
+                .
               </div>
             </li>
           </ul>
         </div>
 
         <div className="space-y-6">
-          <h2 className="text-xl font-obviously font-medium text-deep-graphite">Impact and Reactions</h2>
+          <h2 className="text-xl font-obviously font-medium text-deep-graphite">
+            Impact and Reactions
+          </h2>
           <ul className="space-y-4">
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">Global Market Impact:</span>
+                <span className="text-deep-graphite font-bold">
+                  Global Market Impact:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  The trade tensions have caused volatility in global markets and investor sentiments{" "}
+                  The trade tensions have caused volatility in global markets
+                  and investor sentiments{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">3</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  3
+                </span>
+                .
               </div>
             </li>
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">China's Response:</span>
+                <span className="text-deep-graphite font-bold">
+                  China's Response:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  China has not directly commented on the specific tariff rates but has asked the U.S. to provide
-                  detailed figures{" "}
+                  China has not directly commented on the specific tariff rates
+                  but has asked the U.S. to provide detailed figures{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">3</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  3
+                </span>
+                .
               </div>
             </li>
             <li className="flex gap-2">
               <span className="text-deep-graphite font-bold">•</span>
               <div>
-                <span className="text-deep-graphite font-bold">Hong Kong's Response:</span>
+                <span className="text-deep-graphite font-bold">
+                  Hong Kong's Response:
+                </span>
                 <span className="text-deep-graphite/80">
                   {" "}
-                  Hong Kong has suspended postal services to and from the U.S. in response to Trump's tariff hikes and
-                  removal of the de minimis exemption for shipments from Hong Kong{" "}
+                  Hong Kong has suspended postal services to and from the U.S.
+                  in response to Trump's tariff hikes and removal of the de
+                  minimis exemption for shipments from Hong Kong{" "}
                 </span>
-                <span className="text-xs bg-silver/30 px-1 rounded mx-1">5</span>.
+                <span className="text-xs bg-silver/30 px-1 rounded mx-1">
+                  5
+                </span>
+                .
               </div>
             </li>
           </ul>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!newMessage.trim()) return
+    e.preventDefault();
+    if (!newMessage.trim()) return;
 
     // Create a new search result with unique ID
-    const newResultId = `search-${Date.now()}`
+    const newResultId = `search-${Date.now()}`;
     const newResult: SearchResult = {
       id: newResultId,
       query: newMessage,
       timestamp: new Date(),
       response: mockResponse, // Using the same mock response for now
-    }
+    };
 
     // Add the new result to the array
-    setSearchResults((prev) => [...prev, newResult])
+    setSearchResults((prev) => [...prev, newResult]);
 
     // Clear the input and collapse it
-    setNewMessage("")
-    setIsInputExpanded(false)
+    setNewMessage("");
+    setIsInputExpanded(false);
 
     // Scroll to the new result after a short delay to ensure it's rendered
     setTimeout(() => {
@@ -218,17 +277,17 @@ export default function ResultsPage() {
         resultRefs.current[newResultId]?.scrollIntoView({
           behavior: "smooth",
           block: "start",
-        })
+        });
       }
-    }, 100)
-  }
+    }, 100);
+  };
 
   const handleInputFocus = () => {
-    setIsInputExpanded(true)
+    setIsInputExpanded(true);
     if (textareaRef.current) {
-      textareaRef.current.focus()
+      textareaRef.current.focus();
     }
-  }
+  };
 
   // Format timestamp
   const formatTimestamp = (date: Date) => {
@@ -236,8 +295,8 @@ export default function ResultsPage() {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
-    }).format(date)
-  }
+    }).format(date);
+  };
 
   return (
     <main className="min-h-screen flex flex-col bg-off-white text-deep-graphite">
@@ -263,12 +322,20 @@ export default function ResultsPage() {
           {searchResults.map((result, index) => (
             <div
               key={result.id}
-              className={`mb-16 ${index > 0 ? "pt-16 border-t border-silver/30" : ""}`}
-              ref={(el) => (resultRefs.current[result.id] = el)}
+              className={`mb-16 ${
+                index > 0 ? "pt-16 border-t border-silver/30" : ""
+              }`}
+              ref={(el) => {
+                resultRefs.current[result.id] = el;
+              }}
             >
               <div className="flex items-center justify-between mb-8">
-                <h1 className="text-3xl font-obviously font-medium">{result.query}</h1>
-                <div className="text-sm text-light-graphite">{formatTimestamp(result.timestamp)}</div>
+                <h1 className="text-3xl font-obviously font-medium">
+                  {result.query}
+                </h1>
+                <div className="text-sm text-light-graphite">
+                  {formatTimestamp(result.timestamp)}
+                </div>
               </div>
 
               <Tabs defaultValue="search" className="mb-8">
@@ -330,12 +397,20 @@ export default function ResultsPage() {
                             <div className="h-6 w-6 rounded-full bg-silver/20 flex items-center justify-center text-xs">
                               {source.publication.charAt(0).toUpperCase()}
                             </div>
-                            <span className="text-sm text-light-graphite">{source.publication}</span>
+                            <span className="text-sm text-light-graphite">
+                              {source.publication}
+                            </span>
                           </div>
-                          <h3 className="font-medium text-deep-graphite mb-2">{source.title}</h3>
-                          <p className="text-sm text-deep-graphite/70 line-clamp-2">{source.content}</p>
+                          <h3 className="font-medium text-deep-graphite mb-2">
+                            {source.title}
+                          </h3>
+                          <p className="text-sm text-deep-graphite/70 line-clamp-2">
+                            {source.content}
+                          </p>
                           <div className="mt-3 text-xs text-light-graphite">
-                            <span>+{Math.floor(Math.random() * 10)} sources</span>
+                            <span>
+                              +{Math.floor(Math.random() * 10)} sources
+                            </span>
                           </div>
                         </div>
                       </Card>
@@ -348,24 +423,27 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      {/* Floating Input Component anchored at the bottom */}
       <div
         ref={floatingInputRef}
-        className={`fixed bottom-6 left-0 right-0 z-50 px-4 transition-all duration-300 ${
+        className={`fixed bottom-6 left-0 right-0 z-50 px-4 ${
           isInputExpanded ? "mb-0" : ""
         }`}
       >
         <div className="max-w-4xl mx-auto">
           <div
-            className={`bg-white rounded-full shadow-lg border border-silver/50 transition-all duration-300 ${
-              isInputExpanded ? "p-4 rounded-xl" : "p-3 hover:shadow-xl cursor-pointer rounded-full"
+            className={`bg-white rounded-full shadow-lg border border-silver/50 ${
+              isInputExpanded
+                ? "p-4 rounded-xl"
+                : "p-3 hover:shadow-xl cursor-pointer rounded-full"
             }`}
             onClick={!isInputExpanded ? handleInputFocus : undefined}
           >
             {!isInputExpanded ? (
-              <div className="flex items-center">
+              <div className="flex items-center cursor-text">
                 <Search className="h-5 w-5 text-light-graphite mr-3 ml-1" />
-                <div className="text-light-graphite flex-grow">Ask anything...</div>
+                <div className="text-light-graphite flex-grow">
+                  Ask anything...
+                </div>
                 <div className="bg-deep-graphite text-white p-1 rounded-full">
                   <ArrowUp className="h-4 w-4" />
                 </div>
@@ -373,7 +451,7 @@ export default function ResultsPage() {
             ) : (
               <form onSubmit={handleSubmit} className="relative">
                 <div className="flex items-start">
-                  <div className="mt-2 ml-1 mr-3">
+                  <div className="ml-1 mr-3">
                     <Search className="h-5 w-5 text-light-graphite" />
                   </div>
                   <div className="flex-grow">
@@ -386,26 +464,14 @@ export default function ResultsPage() {
                       rows={2}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && !e.shiftKey) {
-                          e.preventDefault()
-                          handleSubmit(e)
+                          e.preventDefault();
+                          handleSubmit(e);
                         }
                       }}
                       autoFocus
                     />
                   </div>
                   <div className="flex items-center gap-2 mt-1">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      className="h-8 w-8 text-light-graphite hover:text-deep-graphite"
-                      onClick={() => {
-                        setIsInputExpanded(false)
-                        setNewMessage("")
-                      }}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
                     <Button
                       type="submit"
                       size="icon"
@@ -421,5 +487,5 @@ export default function ResultsPage() {
         </div>
       </div>
     </main>
-  )
+  );
 }
