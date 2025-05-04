@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme-provider";
 import localFont from "next/font/local";
 import { QueryProvider } from "@/providers/query-client";
+import { ResearchProvider } from "@/hooks/use-research";
 
 const obviously = localFont({
   src: [
@@ -60,7 +61,7 @@ const cabinetGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Resrach GPT",
+  title: "Research GPT",
   description: "An all-purpose research platform",
   generator: "v0.dev",
 };
@@ -81,7 +82,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <ResearchProvider>{children}</ResearchProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>
